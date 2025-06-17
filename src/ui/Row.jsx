@@ -23,7 +23,7 @@
 // };
 
 export default function Row({children}){
-  return <div>
+  return <div className="flex justify-between">
     {children}
   </div>
 }

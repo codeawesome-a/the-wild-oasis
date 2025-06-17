@@ -7,11 +7,13 @@ import Account from './pages/Account';
 import Users from './pages/Users';
 import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
+import AppLayout from './ui/AppLayout';
 export default function App() {
   return (
     <>
       <BrowserRouter>
-          <Routes>
+          <Routes >
+            <Route element = {<AppLayout/>}>
             <Route index element = {<Navigate replace to="dashboard"/>}/>
             <Route path='dashboard' element = {<Dashboard/>}/>
             <Route path='bookings' element = {<Bookings/>}/>
@@ -19,6 +21,7 @@ export default function App() {
             <Route path='users' element = {<Users/>} />
             <Route path='settings' element = {<Settings/>}/>
             <Route path='account' element = {<Account/>} />
+            </Route>
             <Route path='login' element = {<Login/>} />
             <Route path='*' element = {<PageNotFound />}/>
           </Routes>
