@@ -1,46 +1,62 @@
-import styled from "styled-components";
+import { NavLink } from 'react-router-dom';
+import HomeIcon from '@mui/icons-material/Home';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
 
-const NavList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
+function MainNav() {
+  return (
+    <nav className="bg-white p-4 w-full">
+      <ul className="space-y-2 list-none">
+        <li>
+          <NavLink
+            to="/dashboard"
+            className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all "
+          >
+            <HomeIcon />
+            <span className="text-base font-medium">Home</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/bookings"
+            className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all"
+          >
+            <CalendarTodayIcon />
+            <span className="text-base font-medium">Bookings</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/cabins"
+            className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all"
+          >
+            <HomeWorkIcon />
+            <span className="text-base font-medium">Cabins</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/users"
+            className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all"
+          >
+            <PersonIcon />
+            <span className="text-base font-medium">Users</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/settings"
+            className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all"
+          >
+            <SettingsIcon />
+            <span className="text-base font-medium">Settings</span>
+          </NavLink>
+        </li>
+      </ul>
+    </nav>
+  );
+}
 
-const Link = styled.a`
-  &:link,
-  &:visited {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-
-    color: var(--color-grey-600);
-    font-size: 1.6rem;
-    font-weight: 500;
-    padding: 1.2rem 2.4rem;
-    transition: all 0.3s;
-  }
-
-  /* This works because react-router places the active class on the active NavLink */
-  &:hover,
-  &:active,
-  &.active:link,
-  &.active:visited {
-    color: var(--color-grey-800);
-    background-color: var(--color-grey-50);
-    border-radius: var(--border-radius-sm);
-  }
-
-  & svg {
-    width: 2.4rem;
-    height: 2.4rem;
-    color: var(--color-grey-400);
-    transition: all 0.3s;
-  }
-
-  &:hover svg,
-  &:active svg,
-  &.active:link svg,
-  &.active:visited svg {
-    color: var(--color-brand-600);
-  }
-`;
+export default MainNav;
