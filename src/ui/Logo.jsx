@@ -1,3 +1,4 @@
+import React from 'react';
 function Logo() {
   return (
     <div className="text-center h-[9.6rem] w-auto">

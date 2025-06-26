@@ -1,29 +1,18 @@
-// import styled, { css } from "styled-components";
+import React from "react";
+import clsx from "clsx";
 
-// const Row = styled.div`
-//   display: flex;
+function Row({ type = "vertical", children, className = "" }) {
+  const baseClasses = "flex";
+  const typeClasses =
+    type === "horizontal"
+      ? "justify-between items-center"
+      : "flex-col gap-6";
 
-//   ${(props) =>
-//     props.type === "horizontal" &&
-//     css`
-//       justify-content: space-between;
-//       align-items: center;
-//     `}
-
-//   ${(props) =>
-//     props.type === "vertical" &&
-//     css`
-//       flex-direction: column;
-//       gap: 1.6rem;
-//     `}
-// `;
-
-// Row.defaultProps = {
-//   type: "vertical",
-// };
-
-export default function Row({children}){
-  return <div className="flex justify-between">
-    {children}
-  </div>
+  return (
+    <div className={clsx(baseClasses, typeClasses, className)}>
+      {children}
+    </div>
+  );
 }
+
+export default Row;

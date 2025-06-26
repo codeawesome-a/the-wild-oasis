@@ -3,18 +3,21 @@ import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 import { getCabins } from "../services/apiCabins";
 import { data } from "react-router-dom";
+import CabinTable from "../features/cabins/CabinTable";
+import React from "react";
 
 function Cabins() {
- useEffect(function(){
-  getCabins().then((data)=> console.log(data))
- },[])
-
   return (
+    <>
     <Row type="horizontal">
       <Heading as="h1">All cabins</Heading>
-      <p>TEST</p>
-      <img src="https://rwystcrlbnzgignvtzck.supabase.co/storage/v1/object/public/cabin-images//cabin-001.jpg" alt="cabin image"/>
+      <p>Filter /Sort</p>
     </Row>
+
+    <Row>
+      <CabinTable/>
+    </Row>
+    </>
   );
 }
 

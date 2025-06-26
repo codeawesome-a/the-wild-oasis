@@ -29,14 +29,17 @@
     
 //   line-height: 1.4;
 // `;
+import React from 'react';
+export default function Heading({ as = "h1", children }) {
+  const baseStyles = "leading-snug"; // line-height: 1.4 ≈ leading-snug
 
-export default function  Heading({children}){
+  const typeStyles = {
+    h1: "text-4xl font-semibold", // ≈ 3rem
+    h2: "text-2xl font-semibold", // ≈ 2rem
+    h3: "text-2xl font-medium",   // ≈ 2rem with less weight
+  };
 
+  const Tag = as; // 'h1', 'h2', or 'h3'
 
-
-  return <h1>
-
-{children}
-    
-  </h1>
+  return <Tag className={`${baseStyles} ${typeStyles[as]}`}>{children}</Tag>;
 }
