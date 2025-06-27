@@ -1,25 +1,25 @@
-import styled, { css } from "styled-components";
+import React from "react";
+import clsx from "clsx";
 
-const Form = styled.form`
-  ${(props) =>
-    props.type !== "modal" &&
-    css`
-      padding: 2.4rem 4rem;
+function Form({ type, children, className = "", ...props }) {
+  const baseClasses = "overflow-hidden text-sm"; // text-sm ≈ 1.4rem
 
-      /* Box */
-      background-color: var(--color-grey-0);
-      border: 1px solid var(--color-grey-100);
-      border-radius: var(--border-radius-md);
-    `}
+  const nonModalClasses = "p-6 md:p-10 bg-grey-0 border border-grey-100 rounded-md";
+  const modalClasses = "w-[80rem]"; // 800px
 
-  ${(props) =>
-    props.type === "modal" &&
-    css`
-      width: 80rem;
-    `}
-    
-  overflow: hidden;
-  font-size: 1.4rem;
-`;
+  return (
+    <form
+      className={clsx(
+        baseClasses,
+        type !== "modal" && nonModalClasses,
+        type === "modal" && modalClasses,
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </form>
+  );
+}
 
 export default Form;

@@ -12,7 +12,10 @@ function AppLayout() {
     <Header/>
     <Sidebar/>
     <main className='bg-green-900 min-h-screen pt-[4rem] pl-[4.8rem] pr-[4.8rem] pb-[6.4rem] border-1 border-green-200' >
+      <div className='max-w-[120rem] m-0 m-auto gap-[3.2rem]'>
         <Outlet/>
+      </div>
+        
     </main>
     </div>
   )
