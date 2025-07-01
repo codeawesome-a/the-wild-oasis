@@ -1,66 +1,75 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
-import { deleteCabin } from '../../services/apiCabins';
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCabin } from "../../services/apiCabins";
+import CreateCabinForm from "./CreateCabinForm";
 
-function CabinRow({ cabin}) {
-  const {id:cabinId, name,maxCapacity,regularPrice,dicount,image} = cabin
-//here is the concept of deleting the cabin so we need to use mutationFn
+function CabinRow({ cabin }) {
+  const [showForm, setShowForm] = useState(false);
+  const queryClient = useQueryClient();
 
-const QueryClient = useQueryClient();
-   const {isLoading:isDeleting,mutate} = useMutation({
-      mutationFn:deleteCabin,
-      //we can specify success call back to make it beautiful called invalidate query
- 
-      onSuccess :()=>{
-            alert('cabin deleted successfuly')
-           QueryClient.invalidateQueries({
-            queryKey:['cabins']
-           })
-      },
-      onError:(err)=>{
-        
-        console.log(err)
-        alert(err.message)}
-      
-    })
-  
+  const { id: cabinId, name, maxCapacity, regularPrice, dicount, image } = cabin;
+
+  const { mutate, isLoading: isDeleting } = useMutation({
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      alert("Cabin deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["cabins"] });
+    },
+    onError: (err) => {
+      console.error(err);
+      alert(err.message);
+    },
+  });
+
+  const handleDelete = () => mutate(cabinId);
+  const handleToggleForm = () => setShowForm((prev) => !prev);
 
   return (
-    <div
-      className="grid grid-cols-[0.6fr_1.8fr_2.2fr_1fr_1fr_1fr] gap-x-6 items-center px-6 py-[1.4rem] border-b last:border-b-0"
-    >
+    <div className="grid grid-cols-[0.6fr_1.8fr_2.2fr_1fr_1fr_1fr] gap-x-6 items-center px-6 py-4 border-b last:border-b-0 text-sm overflow-auto">
       {/* Image */}
       <img
-        // src={image}
-        alt='image'
-        className="block w-4 aspect-[3/2] object-cover object-center scale-[1.5] -translate-x-[7px]"
+        src={image}
+        alt={`${name}`}
+        style={{ width: "30px", height: "30px" }}
       />
 
-      {/* Cabin Name */}
-      <div className="text-[1.6rem] font-semibold text-gray-600 font-[Sono]">
-        {name}
-      </div>
+      {/* Name */}
+      <div className="font-semibold text-gray-700 font-[Sono] text-base">{name}</div>
+
+      {/* Capacity */}
+      <div className="text-gray-600 font-[Sono]">{maxCapacity}</div>
 
       {/* Price */}
-      <div className="font-semibold font-[Sono]">
-        {maxCapacity}
-      </div>
-      <div className="font-medium text-green-700 font-[Sono]">
-        {regularPrice}
-      </div>
+      <div className="text-green-700 font-medium font-[Sono]">${regularPrice}</div>
+
       {/* Discount */}
-      <div className="font-medium text-green-700 font-[Sono]">
-        {dicount ? `-${dicount}%` : '—'}
+      <div className="text-green-600 font-[Sono]">
+        {dicount ? `-${dicount}%` : "—"}
       </div>
 
-      <div>
-        <button onClick={()=>mutate(cabinId) } disabled = {isDeleting}>Delete</button>
+      {/* Action buttons */}
+      <div className="flex gap-2 justify-end text-sm">
+        <button
+          onClick={handleToggleForm}
+          className="px-3 py-1 text-blue-600 hover:text-blue-800 transition"
+        >
+          {showForm ? "Close" : "Edit"}
+        </button>
+        <button
+          onClick={handleDelete}
+          disabled={isDeleting}
+          className="px-3 py-1 text-red-600 hover:text-red-800 transition disabled:opacity-50"
+        >
+          {isDeleting ? "Deleting..." : "Delete"}
+        </button>
       </div>
 
-
-      
-
-      
+      {/* Edit form */}
+      {showForm && (
+        <div className="col-span-full mt-4 bg-gray-50 p-4 rounded shadow">
+          <CreateCabinForm cabinToEdit={cabin} />
+        </div>
+      )}
     </div>
   );
 }
